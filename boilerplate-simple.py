@@ -37,7 +37,7 @@ if __name__ == '__main__':
     parser.add_argument("--dry", action="store_true", help="dry run")
     parser.add_argument("--debug", action="store_true", help="debug output")
     parser.add_argument("--verbose", action="store_true", help="verbose")
-    parser.add_argument("FILE", help="some file name")
+    parser.add_argument("file", nargs='*', help="some file name")
 
     args = parser.parse_args()
 

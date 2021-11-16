@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# Copyright (c) 2015 SUSE Linux GmbH
+# Copyright (c) 2016 SUSE LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,9 @@
 # SOFTWARE.
 
 from pprint import pprint
-import os, sys, re
+import os
+import sys
+import re
 import logging
 import cmdln
 
@@ -36,12 +38,15 @@ class BoilderPlate(cmdln.Cmdln):
         return parser
 
     def postoptparse(self):
-        logging.basicConfig()
+        level = None
+        if self.options.debug:
+            level  = logging.DEBUG
+        elif self.options.verbose:
+            level = logging.INFO
+
+        logging.basicConfig(level = level, format='%(module)s:%(lineno)d %(levelname)s %(message)s')
+
         self.logger = logging.getLogger(self.optparser.prog)
-        if (self.options.debug):
-            self.logger.setLevel(logging.DEBUG)
-        elif (self.options.verbose):
-            self.logger.setLevel(logging.INFO)
 
     @cmdln.option("-f", "--force", action="store_true",
                   help="force something")

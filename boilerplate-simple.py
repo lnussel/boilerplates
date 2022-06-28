@@ -1,5 +1,5 @@
-#!/usr/bin/python
-# Copyright (c) 2016 SUSE LLC
+#!/usr/bin/python3
+# Copyright (c) 2016,2022 SUSE LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -19,10 +19,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from pprint import pprint
-import os, sys, re
-import logging
 import argparse
+import logging
+import os
+import re
+import sys
+
+from pprint import pprint
+
 
 def main(args):
 
@@ -32,8 +36,10 @@ def main(args):
 
     return 0
 
+
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='boilerplate python commmand line program')
+    parser = argparse.ArgumentParser(
+                        description='boilerplate python commmand line program')
     parser.add_argument("--dry", action="store_true", help="dry run")
     parser.add_argument("--debug", action="store_true", help="debug output")
     parser.add_argument("--verbose", action="store_true", help="verbose")
@@ -42,13 +48,13 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.debug:
-        level  = logging.DEBUG
+        level = logging.DEBUG
     elif args.verbose:
         level = logging.INFO
     else:
         level = None
 
-    logging.basicConfig(level = level)
+    logging.basicConfig(level=level)
 
     sys.exit(main(args))
 

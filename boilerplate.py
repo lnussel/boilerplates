@@ -1,5 +1,5 @@
-#!/usr/bin/python
-# Copyright (c) 2016 SUSE LLC
+#!/usr/bin/python3
+# Copyright (c) 2016,2022 SUSE LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -19,12 +19,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from pprint import pprint
-import os
-import sys
-import re
-import logging
 import cmdln
+import logging
+import os
+import re
+import sys
+
+from pprint import pprint
+
 
 class BoilderPlate(cmdln.Cmdln):
     def __init__(self, *args, **kwargs):
@@ -40,11 +42,11 @@ class BoilderPlate(cmdln.Cmdln):
     def postoptparse(self):
         level = None
         if self.options.debug:
-            level  = logging.DEBUG
+            level = logging.DEBUG
         elif self.options.verbose:
             level = logging.INFO
 
-        logging.basicConfig(level = level, format='%(module)s:%(lineno)d %(levelname)s %(message)s')
+        logging.basicConfig(level=level, format='%(module)s:%(lineno)d %(levelname)s %(message)s')
 
         self.logger = logging.getLogger(self.optparser.prog)
 
@@ -57,8 +59,9 @@ class BoilderPlate(cmdln.Cmdln):
         ${cmd_option_list}
         """
 
+
 if __name__ == "__main__":
     app = BoilderPlate()
-    sys.exit( app.main() )
+    sys.exit(app.main())
 
 # vim: sw=4 et

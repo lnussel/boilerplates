@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # Copyright (c) 2016,2022 SUSE LLC
-# Copyright (c) 2024 Siemens AG
+# Copyright (c) 2024,2025 Siemens AG
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -42,7 +42,7 @@ def main(args):
     logger = logging.getLogger("boilerplate")
     logger.info("main")
 
-    args.func(args)
+    globals()["do_{}".format(args.command.replace('-', '_'))](args)
 
     return 0
 
@@ -54,21 +54,18 @@ if __name__ == '__main__':
     parser.add_argument("--debug", action="store_true", help="debug output")
     parser.add_argument("--verbose", "-v", action="store_true", help="verbose")
 
-    subparsers = parser.add_subparsers(title="Commands")
+    subparsers = parser.add_subparsers(dest="command", title="Commands")
 
     parser_list = subparsers.add_parser("list", help="list stuff")
-    parser_list.set_defaults(func=do_list)
 
     parser_cat = subparsers.add_parser("cat", help="cat stuff")
     parser_cat.add_argument("file", nargs='*', help="some file name")
-    parser_cat.set_defaults(func=do_cat)
 
     args = parser.parse_args()
 
-    if not args.func:
+    if not getattr(args, 'command', None):
         parser.print_help()
         sys.exit(1)
-
 
     if args.debug:
         level = logging.DEBUG
